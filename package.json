@@ -1,0 +1,27 @@
+{
+  "name": "wycli",
+  "version": "1.0.0",
+  "description": "a cli tool to developping easily",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "wycli": "./dist/index.js"
+  },
+  "keywords": [
+    "cli",
+    "typescript"
+  ],
+  "author": "Wy",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "figlet": "^1.6.0"
+  }
+}
