@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import * as path from "path";
-import { createDir, createFile, listDirContents } from "../options";
+import { createDir, createFile, listDirContents } from "../option-processors";
 import generateCommand from './generate.command';
 
 const command = new Command("wycli");
@@ -15,7 +15,7 @@ command
     .action((options: {[key: string]: string}, command: Command) => {
         console.log("wycli options: ", options)
         if (options.ls) {
-            const filepath = typeof options.ls === "string" ? options.ls : __dirname;
+            const filepath = typeof options.ls === "string" ? options.ls : process.cwd();
             listDirContents(filepath);
         }
         if (options.mkdir) {
