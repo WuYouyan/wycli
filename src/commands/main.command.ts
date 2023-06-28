@@ -1,7 +1,8 @@
 import { Command } from 'commander';
-import * as path from "path";
-import { createDir, createFile, listDirContents } from "../option-processors";
+import path from "path";
 import generateCommand from './generate.command';
+import { listDirContents } from '../utilities/list';
+import { createDir, createFile } from '../utilities/file-operations';
 
 const command = new Command("wycli");
 
