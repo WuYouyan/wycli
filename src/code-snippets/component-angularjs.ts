@@ -1,5 +1,7 @@
+import { capitalizeFirstLetter } from "../utilities/string-operation";
+
 export function generateComponent(name: string, moduleName: string, controllerName?: string, loadUrl: boolean = false): string {
-  controllerName = controllerName || name + 'Controller';
+  controllerName = capitalizeFirstLetter(controllerName || name + 'Controller');
   let templateUrl = loadUrl?
     `templateUrl: "./${name}/${name}.html",: ';`: 
     `templateUrl: function($element, $attrs, loadtemplate){

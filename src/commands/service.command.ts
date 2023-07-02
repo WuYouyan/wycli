@@ -1,4 +1,7 @@
 import { Command } from 'commander';
+import { VirtualFile } from '../models/VirtualFile.model';
+import { generateService } from '../code-snippets/service-angularjs';
+import { createFile } from '../utilities/file-operations';
 
 const command = new Command("service");
 
@@ -7,8 +10,15 @@ command
     .argument('<name>', 'service name')
     .action(function(name: string, options: {[key: string]: string}, command: Command){
         console.log("options: ", options);
-        if (!Object.keys(options).length) {
+        if (!name) {
             command.outputHelp();
+        } else {
+            let virtualFile = new VirtualFile(name, {
+                extname: "js",
+                content: generateService(name, "test"),
+                path: process.cwd()
+            });
+            createFile(virtualFile);
         }
     });
 
