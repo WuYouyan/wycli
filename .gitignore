@@ -1,4 +1,11 @@
 node_modules
+# compiled files
 dist/
-.idea
 *.tsbuildinfo
+
+
+
+#vsc preferences
+.vscode/
+#idea preferences
+.idea

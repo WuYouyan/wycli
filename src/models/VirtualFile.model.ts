@@ -1,6 +1,7 @@
 import path from "path";
 
 export interface VirtualFileOptions {
+    extname?: string;
     path?: string;
     content?: string;
 }
@@ -9,16 +10,16 @@ export interface VirtualFileOptions {
 export class VirtualFile {
     name: string;
     private originalName: string;
-    private extname: string;
+    private extname: string | null = null;
 
     path: string | null = null;
     content: string = "";
-    constructor(name: string, extname: string, options?: VirtualFileOptions) {
+    constructor(name: string, options?: VirtualFileOptions) {
         this.name = name;
         this.originalName = name;
-        this.extname = extname;
-
+        
         if (options) {
+            this.extname = options.extname || this.extname;
             this.path = options.path || this.path;
             this.content = options.content || this.content;
         }
@@ -27,7 +28,7 @@ export class VirtualFile {
      * when file name already exists, rename it by adding "(1)" at the end or adding number in parentheses like "(2)""
      * @returns {VirtualFile} the same virtual file
      */
-    renameWhenExists() {
+    renameWhenExists(): VirtualFile {
         if (this.name === this.originalName) {
             this.name = `${this.originalName} (1)`;
             return this;
@@ -52,15 +53,15 @@ export class VirtualFile {
      * Get file name with extension name 
      * @returns {string} ex: "file.js"
      */
-    fullName() {
-        return `${this.name}.${this.extname}`;
+    fullName(): string {
+        return this.extname === null ? this.name : `${this.name}.${this.extname}`;
     }
     /**
      * get full path in file system
      * @throws an error is thrown if path not set
      * @returns {string}
      */
-    fullPath() {
+    fullPath(): string {
         if (!this.path) {
             throw new Error(`path not set for ${this.fullName()}`);           
         }

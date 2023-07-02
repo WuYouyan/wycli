@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import path from "path";
 import generateCommand from './generate.command';
 import { listDirContents } from '../utilities/list';
-import { createDir, createFile } from '../utilities/file-operations';
+import { createDir, createEmptyFile } from '../utilities/file-operations';
 
 const command = new Command("wycli");
 
@@ -23,7 +23,7 @@ command
             createDir(path.resolve(__dirname, options.mkdir));
         }
         if (options.touch) {
-            createFile(path.resolve(__dirname, options.touch));
+            createEmptyFile(path.resolve(__dirname, options.touch));
         }
         if (!process.argv.slice(2).length) {
             command.outputHelp();
