@@ -7,6 +7,7 @@ import { createDir, createEmptyFile } from '../utilities/file-operations';
 const command = new Command("wycli");
 
 command
+    .enablePositionalOptions()
     .version("1.0.0", "-v, --version", "output the current version")
     .usage("[options] arguments...")
     .description("An example CLI for managing a directory")

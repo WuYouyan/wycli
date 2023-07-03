@@ -7,7 +7,8 @@ const command = new Command("service");
 
 command
     .alias("s")
-    .argument('<name>', 'service name')
+    .argument('<name>', 'service name') // [name] optional, <name> required
+    .option("-m, --module <moduleName>", "module name")
     .action(function(name: string, options: {[key: string]: string}, command: Command){
         console.log("options: ", options);
         if (!name) {
@@ -15,7 +16,7 @@ command
         } else {
             let virtualFile = new VirtualFile(name, {
                 extname: "js",
-                content: generateService(name, "test"),
+                content: generateService(name, options.module || "test"),
                 path: process.cwd()
             });
             createFile(virtualFile);

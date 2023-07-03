@@ -8,15 +8,17 @@ const command = new Command("component");
 command
     .alias("c")
     .argument('<name>', 'component name')
-    .action(function(name: string, options: {[key: string]: string}){
+    .option("-m, --module <moduleName>", "module name")
+    .action(function(name: string, options: {[key: string]: string}, command: Command){
         console.log("name:", name);
         console.log("options: ", options);
         if (!name) {
             command.outputHelp();
         } else {
+            //console.log("mkdir: ", command.parent?.parent?.opts().mkdir); // get parent options
             let virtualFile = new VirtualFile(name, {
                 extname: "js",
-                content: generateComponent(name, "test"),
+                content: generateComponent(name, options.module || "test"),
                 path: process.cwd()
             });
             createFile(virtualFile);
