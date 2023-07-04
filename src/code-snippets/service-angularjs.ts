@@ -1,15 +1,14 @@
+import { ServiceConfigAngularjs } from "../models/service-command.model";
 import { capitalizeFirstLetter } from "../utilities/string-operation";
 
 /**
- * 
- * @param {string} name ex: myService 
- * @param {string} moduleName
- * @param {boolean} [es6Style=true]
+ *
+ * @param {ServiceConfigAngularjs} service
  * @returns {string}
  */
-export function generateService(name: string, moduleName: string, es6Style: boolean = true): string {
-  let className = capitalizeFirstLetter(name);
-  let stringTemplate = 
+export function generateService(service: ServiceConfigAngularjs): string {
+  let className = capitalizeFirstLetter(service.name);
+  let stringTemplate =
 `(function(){
     'use strict';
 
@@ -21,9 +20,9 @@ export function generateService(name: string, moduleName: string, es6Style: bool
 
         }
     }
-    let moduleName = "${moduleName}";
+    let moduleName = "${service.moduleName}";
     angular.module(moduleName)
-        .service('${name}', ${className});
+        .service('${service.name}', ${className});
 })();`;
   return stringTemplate;
 }

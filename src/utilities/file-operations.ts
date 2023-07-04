@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, openSync, writeFile } from "fs";
-import { VirtualFile } from "../models/VirtualFile.model";
+import { VirtualFile } from "../models/virtual-file.model";
 
 /**
  * create directory

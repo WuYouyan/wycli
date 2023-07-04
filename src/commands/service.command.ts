@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { VirtualFile } from '../models/VirtualFile.model';
+import { VirtualFile } from '../models/virtual-file.model';
 import { generateService } from '../code-snippets/service-angularjs';
 import { createFile } from '../utilities/file-operations';
 
@@ -16,7 +16,11 @@ command
         } else {
             let virtualFile = new VirtualFile(name, {
                 extname: "js",
-                content: generateService(name, options.module || "test"),
+                content: generateService({
+                    name: name,
+                    moduleName: options.module || "test",
+                    es6Style: true
+                }),
                 path: process.cwd()
             });
             createFile(virtualFile);
