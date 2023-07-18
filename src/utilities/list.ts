@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
+const treeify = require('tree-node-cli');
+
 
 export async function listDirContents(filepath: string) {
     try {
@@ -14,4 +16,8 @@ export async function listDirContents(filepath: string) {
     } catch (error) {
         console.error("Error occurred while reading the directory!", error);
     }
+}
+
+export function listDirContentsInTree(dirPath: string): void {
+    console.log(treeify(dirPath));
 }
