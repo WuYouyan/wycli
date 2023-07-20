@@ -17,7 +17,7 @@ export class VirtualFile {
     constructor(name: string, options?: VirtualFileOptions) {
         this.name = name;
         this.originalName = name;
-        
+
         if (options) {
             this.extname = options.extname || this.extname;
             this.path = options.path || this.path;
@@ -38,7 +38,7 @@ export class VirtualFile {
         let matches: RegExpExecArray | null;
         let lastMatch: RegExpExecArray | null = null;
 
-        let extra = this.name.slice(this.originalName.length); 
+        let extra = this.name.slice(this.originalName.length);
         while ((matches = digitalInparenthesesRegex.exec(extra)) !== null) {
             lastMatch = matches;
         }
@@ -50,7 +50,7 @@ export class VirtualFile {
         return this;
     }
     /**
-     * Get file name with extension name 
+     * Get file name with extension name
      * @returns {string} ex: "file.js"
      */
     fullName(): string {
@@ -63,8 +63,26 @@ export class VirtualFile {
      */
     fullPath(): string {
         if (!this.path) {
-            throw new Error(`path not set for ${this.fullName()}`);           
+            throw new Error(`path not set for ${this.fullName()}`);
         }
         return path.join(this.path, this.fullName());
+    }
+    //TODO: create unit test
+    /**
+     * Creates a VirtualFile object from a given path name and options.
+     *
+     * @param {string} pathName - The path name of the file. like "fileName" or "src/fileName"
+     * @param {VirtualFileOptions} options - The options for creating the VirtualFile object.
+     * @return {VirtualFile} - The created VirtualFile object.
+     */
+    static fromPath(pathName: string, options: VirtualFileOptions ): VirtualFile {
+        let directoryPath =  path.dirname(pathName);
+        let name = path.basename(pathName);
+        if (options.path) {
+            options.path = path.join(options.path, directoryPath);
+        } else {
+            options.path = directoryPath;
+        }
+        return new VirtualFile(name, options);
     }
 }

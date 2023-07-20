@@ -9,11 +9,11 @@ import { capitalizeFirstLetter } from "../utilities/string-operation";
 export function generateComponent(component: ComponentConfigAngularjs): string {
   component.controllerName = capitalizeFirstLetter(component.controllerName || component.name + 'Controller');
   let templateUrl = !!component.templateUrlActive?
-    `templateUrl: "./${component.name}/${component.name}.html",: ';`:
+    `templateUrl: "./${component.name}/${component.name}.html"`:
     `templateUrl: function($element, $attrs, loadtemplate){
-      let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.html', ${component.moduleName});
-      return templateUrl;
-    },`;
+        let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.html', ${component.moduleName});
+        return templateUrl;
+      }`;
   let stringTemplate =
 `class ${component.controllerName} {
     constructor(){
@@ -28,12 +28,13 @@ export function generateComponent(component: ComponentConfigAngularjs): string {
 let moduleName = "${component.moduleName}";
 angular.module(moduleName, [])
   .component("${component.name}", {
-    ${templateUrl}
-    controller: ${component.controllerName},
-    controllerAs: "$ctrl",
-    bindings: {
-    }
-	});`;
+      ${templateUrl},
+      controller: ${component.controllerName},
+      controllerAs: "$ctrl",
+      bindings: {
+      }
+	});
+`;
   return stringTemplate;
 }
 

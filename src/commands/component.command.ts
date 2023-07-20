@@ -10,19 +10,17 @@ command
     .argument('<name>', 'component name')
     .option("-m, --module <moduleName>", "module name")
     .action(function(name: string, options: {[key: string]: string}, command: Command){
-        console.log("name:", name);
-        console.log("options: ", options);
         if (!name) {
             command.outputHelp();
         } else {
             //console.log("mkdir: ", command.parent?.parent?.opts().mkdir); // get parent options
-            let virtualFile = new VirtualFile(name, {
+            let virtualFile = VirtualFile.fromPath(name, {
                 extname: "js",
-                content: generateComponent({
-                    name: name,
-                    moduleName: options.module || "test"
-                }),
                 path: process.cwd()
+            });
+            virtualFile.content = generateComponent({
+                name: virtualFile.name,
+                moduleName: options.module || "test"
             });
             createFile(virtualFile);
         }

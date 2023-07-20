@@ -14,15 +14,15 @@ command
         if (!name) {
             command.outputHelp();
         } else {
-            let virtualFile = new VirtualFile(name, {
+            let virtualFile = VirtualFile.fromPath(name, {
                 extname: "js",
-                content: generateService({
-                    name: name,
-                    moduleName: options.module || "test",
-                    es6Style: true
-                }),
                 path: process.cwd()
             });
+            virtualFile.content = generateService({
+                name: virtualFile.name,
+                moduleName: options.module || "test",
+                es6Style: true
+            })
             createFile(virtualFile);
         }
     });
