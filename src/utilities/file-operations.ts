@@ -28,7 +28,7 @@ export function createFile(virtualFile: VirtualFile) {
                 console.error(chalk.red("Error occurred while writing the file!"));
                 console.error(chalk.red(err.message));
             } else {
-                console.log(chalk.green(`"${virtualFile.fullName()}" has been created successfully!`));
+                console.log(chalk.green(`"${virtualFile.fullName()}" has been created successfully!`), `at ${virtualFile.path}`);
             }
         });
     } else {
