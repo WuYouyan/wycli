@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { VirtualFile } from '../models/virtual-file.model';
-import { generateService } from '../code-snippets/service-angularjs';
+import { generateService } from '../code-snippets/service.angularjs';
 import { createFile } from '../utilities/file-operations';
 
 const command = new Command("service");
