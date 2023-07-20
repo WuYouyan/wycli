@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, openSync, writeFile } from "fs";
 import { VirtualFile } from "../models/virtual-file.model";
+import chalk from "chalk";
 
 /**
  * create directory
@@ -20,10 +21,14 @@ export function createEmptyFile(filepath: string) {
 
 export function createFile(virtualFile: VirtualFile) {
     let filePath = virtualFile.fullPath();
+
     if(!existsSync(filePath)) {
         writeFile(filePath, virtualFile.content, (err) => {
             if (err) {
-                console.error(err);
+                console.error(chalk.red("Error occurred while writing the file!"));
+                console.error(chalk.red(err.message));
+            } else {
+                console.log(chalk.green(`"${virtualFile.fullName()}" has been created successfully!`));
             }
         });
     } else {
