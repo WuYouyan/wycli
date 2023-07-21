@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 import componentCommand from './component.command';
+import directiveCommand from './directive.command';
 import serviceCommand from './service.command';
 
 const command = new Command("generate");
@@ -12,7 +13,8 @@ command
         }
     })
     .addCommand(serviceCommand)
-    .addCommand(componentCommand);
+    .addCommand(componentCommand)
+    .addCommand(directiveCommand);
 
 
 export default command;
