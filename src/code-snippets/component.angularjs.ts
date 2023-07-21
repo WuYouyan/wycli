@@ -2,18 +2,30 @@ import { ComponentConfigAngularjs } from "../models/component-command.model";
 import { capitalizeFirstLetter } from "../utilities/string-operation";
 
 
+function getTemplateSetting(component: ComponentConfigAngularjs): string {
+  let templateString = "";
+  if (!component.templateUrl) {
+    templateString = `template: ""`;
+  } else {
+    templateString = !component.templateUrlFn?
+    `templateUrl: "./${component.name}/${component.name}.html"`:
+      `templateUrl: function($element, $attrs, loadtemplate){
+        // TODO:fix path
+        let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.html', ${component.moduleName});
+        return templateUrl;
+      }`;
+  }
+  return templateString;
+}
+
+
 /**
  * @param  {ComponentConfigAngularjs} component
  * @returns {string}
  */
 export function generateComponent(component: ComponentConfigAngularjs): string {
   component.controllerName = capitalizeFirstLetter(component.controllerName || component.name + 'Controller');
-  let templateUrl = !!component.templateUrlActive?
-    `templateUrl: "./${component.name}/${component.name}.html"`:
-    `templateUrl: function($element, $attrs, loadtemplate){
-        let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.html', ${component.moduleName});
-        return templateUrl;
-      }`;
+  let templateUrl = getTemplateSetting(component);
   let stringTemplate =
 `class ${component.controllerName} {
     constructor(){
@@ -26,14 +38,14 @@ export function generateComponent(component: ComponentConfigAngularjs): string {
 }
 
 let moduleName = "${component.moduleName}";
-angular.module(moduleName, [])
+angular.module(moduleName)
   .component("${component.name}", {
       ${templateUrl},
       controller: ${component.controllerName},
       controllerAs: "$ctrl",
       bindings: {
       }
-	});
+  });
 `;
   return stringTemplate;
 }
