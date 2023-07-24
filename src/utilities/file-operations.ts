@@ -105,7 +105,7 @@ export function replaceStringInFile(filePath: string, target: string, replace: s
     let regexTag = replaceFirst?'':'g';
     const targetRegex = new RegExp(target, regexTag);
     /**
-     * @see https://nodejs.org/api/stream.html
+     * @see {@link https://nodejs.org/api/stream.html#implementing-a-transform-stream | Implementing a transform stream}
      */
     const transformStream = new Transform({
         transform(chunk, encoding, callback) {
