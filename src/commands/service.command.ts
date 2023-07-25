@@ -15,7 +15,7 @@ command
             command.outputHelp();
         } else {
             let virtualFile = VirtualFile.fromPath(name, {
-                extname: "js",
+                extname: "service.js",
                 path: process.cwd()
             });
             virtualFile.content = generateService({

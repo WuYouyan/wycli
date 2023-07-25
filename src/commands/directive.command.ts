@@ -18,7 +18,7 @@ command
         } else {
             //console.log("mkdir: ", command.parent?.parent?.opts().mkdir); // get parent options
             let virtualFile = VirtualFile.fromPath(name, {
-                extname: "js",
+                extname: "directive.js",
                 path: process.cwd()
             });
             virtualFile.content = generateDirective({
