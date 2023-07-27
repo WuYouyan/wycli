@@ -1,6 +1,7 @@
+import path from "path";
 import { ComponentConfigAngularjs } from "../models/component-command.model";
+import { replaceStringInFile } from "../utilities/file-operations";
 import { capitalizeFirstLetter } from "../utilities/string-operation";
-
 
 function getTemplateSetting(component: ComponentConfigAngularjs): string {
   let templateString = "";
@@ -74,4 +75,16 @@ export function generateModalComponentHTML(): string {
 </footer>`;
 
   return htmlString;
+}
+
+export const DEFAULT_TARGET_STRING = "//INSERT BOOTSTRAP MODAL COMPONENT CODE HERE"; 
+export function generateModalUsageComponentHTML(): string {
+  let usageCodes = `// codes test\n\tconst modal = new ModalComponent();\n\tmodal.open();`;
+  return usageCodes;
+}
+
+export function addModalComponentUsageInFile(filePath: string, targetString: string = DEFAULT_TARGET_STRING): void {
+  let resolvedFilePath = path.resolve(process.cwd(), filePath);
+  console.log('resolvedFilePath: ', resolvedFilePath);
+  replaceStringInFile(resolvedFilePath, targetString, generateModalUsageComponentHTML());
 }

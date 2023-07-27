@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { generateModalComponent, generateModalComponentHTML } from '../code-snippets/bootstrap-modal.angularjs';
+import { addModalComponentUsageInFile, generateModalComponent, generateModalComponentHTML } from '../code-snippets/bootstrap-modal.angularjs';
 import { generateComponent } from '../code-snippets/component.angularjs';
 import { VirtualFile } from '../models/virtual-file.model';
 import { createFile } from '../utilities/file-operations';
@@ -14,6 +14,7 @@ command
     .option("-tu, --template-url", "template url for directive definition", true)
     .option("-tuf, --template-url-function", "template url function for directive definition", false)
     .option("-bm, --bootstrap-modal", "bootstrap modal component", false)
+    .option("-bmp, --bootstrap-modal-path <filePath>", "file path where We add open bootstrap modal component codes in place of \"//INSERT BOOTSTRAP MODAL COMPONENT CODE HERE\"")
     .action(function(name: string, options: {[key: string]: string}, command: Command){
         if (!name) {
             command.outputHelp();
@@ -37,6 +38,9 @@ command
                 });
                 createFile(virtualJsFile);
                 createFile(virtualHTMLFile);
+                if (typeof options.bootstrapModalPath === "string") {
+                    addModalComponentUsageInFile(options.bootstrapModalPath);
+                }
                 return;
             }
             //console.log("mkdir: ", command.parent?.parent?.opts().mkdir); // get parent options

@@ -100,6 +100,10 @@ export function replaceStringBigFile(filePath: string, target: string, replace: 
  * @param {boolean} [replaceFirst=false] - Indicates whether to replace only the first occurrence or all occurrences of the target.
  */
 export function replaceStringInFile(filePath: string, target: string, replace: string, replaceFirst: boolean = false) {
+    if (!existsSync(filePath)) {
+        console.error(chalk.red(`"${filePath}" does not exist!`));
+        return;
+    }
     let replaced = false;
     let remaining = '';
     let regexTag = replaceFirst?'':'g';
@@ -130,9 +134,9 @@ export function replaceStringInFile(filePath: string, target: string, replace: s
         }
     });
     // Create a read stream to read data from the input file in smaller chunks
-    const readStream = createReadStream(filePath);
+    const readStream = createReadStream(filePath, { encoding: 'utf8' });
     // Create a write stream to write data to a temporary output file
-    const writeStream = createWriteStream(filePath + '.tmp');
+    const writeStream = createWriteStream(filePath + '.tmp', { encoding: 'utf8' });
 
     // Handle errors when reading from the input file
     readStream.on('error', (err) => {
@@ -162,6 +166,5 @@ export function replaceStringInFile(filePath: string, target: string, replace: s
                     console.log(chalk.green('Replaced!'));
                 }
             });
-            console.log('Replaced!');
         });
 }
