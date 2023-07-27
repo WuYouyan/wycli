@@ -9,7 +9,6 @@ command
     .argument('[path]', 'path')
     .option("-tree, --tree-view", "List directory contents in tree view")
     .action(function(path: string | undefined, options: {[key: string]: string}, command: Command){
-        console.log("🚀 ~ file: list.command.ts:12 ~ .action ~ path:", path)
         const currentDir = process.cwd();
         const filepath = typeof path === "string" ? nodePath.join(currentDir, path) : currentDir;
         if (options.treeView) {
