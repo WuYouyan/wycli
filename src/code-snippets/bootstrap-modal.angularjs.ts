@@ -77,7 +77,7 @@ export function generateModalComponentHTML(): string {
   return htmlString;
 }
 
-export const DEFAULT_TARGET_STRING = "//INSERT BOOTSTRAP MODAL COMPONENT CODE HERE"; 
+export const DEFAULT_TARGET_STRING = "//INSERT HERE"; 
 export function generateModalUsageComponentHTML(): string {
   let usageCodes = `// codes test\n\tconst modal = new ModalComponent();\n\tmodal.open();`;
   return usageCodes;
