@@ -23,8 +23,8 @@ function getTemplateSetting(directive: DirectiveConfigAngularjs): string {
  */
 export function generateDirective(directive: DirectiveConfigAngularjs): string {
   // remove undefined keys in directive config object
-  let templateUrl = getTemplateSetting(directive);
-  let stringTemplate =
+  const templateUrl = getTemplateSetting(directive);
+  const stringTemplate =
 `class ${directive.controllerName} {
     constructor(){
         'ngInject';

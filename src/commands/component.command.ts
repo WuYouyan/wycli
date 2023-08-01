@@ -20,7 +20,7 @@ command
             command.outputHelp();
         } else {
             if (options.bootstrapModal) {
-                let virtualJsFile = VirtualFile.fromPath(name, {
+                const virtualJsFile = VirtualFile.fromPath(name, {
                     extname: "modal.js",
                     path: process.cwd()
                 });
@@ -31,7 +31,7 @@ command
                     templateUrl: !!options.templateUrl,
                     templateUrlFn: !!options.templateUrlFunction
                 })
-                let virtualHTMLFile = VirtualFile.fromPath(name, {
+                const virtualHTMLFile = VirtualFile.fromPath(name, {
                     extname: "modal.html",
                     path: process.cwd(),
                     content: generateModalComponentHTML()
@@ -44,7 +44,7 @@ command
                 return;
             }
             //console.log("mkdir: ", command.parent?.parent?.opts().mkdir); // get parent options
-            let virtualFile = VirtualFile.fromPath(name, {
+            const virtualFile = VirtualFile.fromPath(name, {
                 extname: "component.js",
                 path: process.cwd()
             });

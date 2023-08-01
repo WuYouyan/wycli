@@ -21,7 +21,7 @@ export function createEmptyFile(filepath: string) {
 }
 
 export function createFile(virtualFile: VirtualFile) {
-    let filePath = virtualFile.fullPath();
+    const filePath = virtualFile.fullPath();
 
     if(!existsSync(filePath)) {
         writeFile(filePath, virtualFile.content, (err) => {
@@ -106,7 +106,7 @@ export function replaceStringInFile(filePath: string, target: string, replace: s
     }
     let replaced = false;
     let remaining = '';
-    let regexTag = replaceFirst?'':'g';
+    const regexTag = replaceFirst?'':'g';
     const targetRegex = new RegExp(target, regexTag);
     /**
      * @see {@link https://nodejs.org/api/stream.html#implementing-a-transform-stream | Implementing a transform stream}

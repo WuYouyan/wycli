@@ -38,7 +38,7 @@ export class VirtualFile {
         let matches: RegExpExecArray | null;
         let lastMatch: RegExpExecArray | null = null;
 
-        let extra = this.name.slice(this.originalName.length);
+        const extra = this.name.slice(this.originalName.length);
         while ((matches = digitalInparenthesesRegex.exec(extra)) !== null) {
             lastMatch = matches;
         }
@@ -76,8 +76,8 @@ export class VirtualFile {
      * @return {VirtualFile} - The created VirtualFile object.
      */
     static fromPath(pathName: string, options: VirtualFileOptions ): VirtualFile {
-        let directoryPath =  path.dirname(pathName);
-        let name = path.basename(pathName);
+        const directoryPath =  path.dirname(pathName);
+        const name = path.basename(pathName);
         if (options.path) {
             options.path = path.join(options.path, directoryPath);
         } else {

@@ -25,8 +25,8 @@ function getTemplateSetting(component: ComponentConfigAngularjs): string {
  */
 export function generateComponent(component: ComponentConfigAngularjs): string {
   component.controllerName = capitalizeFirstLetter(component.controllerName || component.name + 'Controller');
-  let templateUrl = getTemplateSetting(component);
-  let stringTemplate =
+  const templateUrl = getTemplateSetting(component);
+  const stringTemplate =
 `class ${component.controllerName} {
     constructor(){
         'ngInject';

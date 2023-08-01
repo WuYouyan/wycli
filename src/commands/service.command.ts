@@ -14,7 +14,7 @@ command
         if (!name) {
             command.outputHelp();
         } else {
-            let virtualFile = VirtualFile.fromPath(name, {
+            const virtualFile = VirtualFile.fromPath(name, {
                 extname: "service.js",
                 path: process.cwd()
             });

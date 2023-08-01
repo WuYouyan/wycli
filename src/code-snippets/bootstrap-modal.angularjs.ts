@@ -26,8 +26,8 @@ function getTemplateSetting(component: ComponentConfigAngularjs): string {
  */
 export function generateModalComponent(component: ComponentConfigAngularjs): string {
   component.controllerName = capitalizeFirstLetter(component.controllerName || component.name + 'Controller');
-  let templateUrl = getTemplateSetting(component);
-  let stringTemplate =
+  const templateUrl = getTemplateSetting(component);
+  const stringTemplate =
     `class ${component.controllerName} {
     constructor(){
         'ngInject';
@@ -62,7 +62,7 @@ angular.module(moduleName)
 
 
 export function generateModalComponentHTML(): string {
-  let htmlString =
+  const htmlString =
 `<header class="modal-header">
     <h1 class="modal-title">head</h1>
 </header>
@@ -79,12 +79,12 @@ export function generateModalComponentHTML(): string {
 
 export const DEFAULT_TARGET_STRING = "//INSERT HERE"; 
 export function generateModalUsageComponentHTML(): string {
-  let usageCodes = `// codes test\n\tconst modal = new ModalComponent();\n\tmodal.open();`;
+  const usageCodes = `// codes test\n\tconst modal = new ModalComponent();\n\tmodal.open();`;
   return usageCodes;
 }
 
 export function addModalComponentUsageInFile(filePath: string, targetString: string = DEFAULT_TARGET_STRING): void {
-  let resolvedFilePath = path.resolve(process.cwd(), filePath);
+  const resolvedFilePath = path.resolve(process.cwd(), filePath);
   console.log('resolvedFilePath: ', resolvedFilePath);
   replaceStringInFile(resolvedFilePath, targetString, generateModalUsageComponentHTML());
 }

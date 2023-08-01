@@ -7,8 +7,8 @@ import { capitalizeFirstLetter } from "../utilities/string-operation";
  * @returns {string}
  */
 export function generateService(service: ServiceConfigAngularjs): string {
-  let className = capitalizeFirstLetter(service.name);
-  let stringTemplate =
+  const className = capitalizeFirstLetter(service.name);
+  const stringTemplate =
 `(function(){
     'use strict';
 
