@@ -1,8 +1,11 @@
-
-<!-- 
 # Installation
-`npm install wycli` 
--->
+1. install nodejs 
+2. clone repository
+3. run command `npm install` to install dependencies
+4. run command `npm run build` to build project
+5. run command `npm link` to enable globally use of `wycli` 
+6. feel free to use command `wycli [command]`
+
 
 # Structure of cli
 
