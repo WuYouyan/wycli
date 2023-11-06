@@ -4,8 +4,13 @@
   "description": "a cli tool to developping easily",
   "main": "dist/index.js",
   "scripts": {
+    "build:start": "npx tsc & node dist/index.js",
+    "start": "node dist/index.js",
     "build": "npx tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:watch": "npx tsc --watch",
+    "lint": "npx eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "node dist/index.js ls -tree"
   },
   "bin": {
     "wycli": "./dist/index.js"
@@ -17,11 +22,17 @@
   "author": "Wy",
   "license": "MIT",
   "devDependencies": {
+    "@types/figlet": "^1.5.6",
     "@types/node": "^20.3.1",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "eslint": "^8.46.0",
     "typescript": "^5.1.3"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
     "commander": "^11.0.0",
-    "figlet": "^1.6.0"
+    "figlet": "^1.6.0",
+    "tree-node-cli": "^1.6.0"
   }
 }
