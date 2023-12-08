@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 import componentCommand from './component.command';
 import directiveCommand from './directive.command';
+import filterCommand from './filter.command';
 import serviceCommand from './service.command';
 
 const command = new Command("generate");
@@ -14,7 +15,8 @@ command
     })
     .addCommand(serviceCommand)
     .addCommand(componentCommand)
-    .addCommand(directiveCommand);
+    .addCommand(directiveCommand)
+    .addCommand(filterCommand);
 
 
 export default command;
