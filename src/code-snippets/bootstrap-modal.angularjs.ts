@@ -9,11 +9,17 @@ function getTemplateSetting(component: ComponentConfigAngularjs): string {
     templateString = `template: ""`;
   } else {
     templateString = !component.templateUrlFn ?
-      `templateUrl: "./${component.name}/${component.name}.html"` :
+      `templateUrl: "./${component.name}.modal.html"` :
       `templateUrl: function($element, $attrs, loadtemplate){
-            // TODO:fix path
-            let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.html', ${component.moduleName});
+            // TODO: fix path
+            let templateUrl = loadtemplate.getUrl('modals/${component.name}/${component.name}.modal.html', ${component.moduleName});
             return templateUrl;
+            /* // if loadtemplate is not available
+            const module = kis.findModule(moduleName);
+            // TODO: fix path
+            const htmlPath = 'modals/${component.name}/${component.name}.modal.html';
+            return window.kis._toAbsoluteContentRootPath(module.name, htmlPath);
+            */
         }`;
   }
   return templateString;
@@ -77,7 +83,7 @@ export function generateModalComponentHTML(): string {
   return htmlString;
 }
 
-export const DEFAULT_TARGET_STRING = "//INSERT HERE"; 
+export const DEFAULT_TARGET_STRING = "//INSERT HERE";
 export function generateModalUsageComponentHTML(): string {
   const usageCodes = `// codes test\n\tconst modal = new ModalComponent();\n\tmodal.open();`;
   return usageCodes;

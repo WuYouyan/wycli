@@ -14,7 +14,7 @@ command
     .option("-tu, --template-url", "template url for directive definition", true)
     .option("-tuf, --template-url-function", "template url function for directive definition", false)
     .option("-bm, --bootstrap-modal", "bootstrap modal component", false)
-    .option("-bmp, --bootstrap-modal-path <filePath>", "file path where We add open bootstrap modal component codes in place of \"//INSERT BOOTSTRAP MODAL COMPONENT CODE HERE\"")
+    .option("-bmp, --bootstrap-modal-path <filePath>", "file path where We add open bootstrap modal component codes in place of \"//INSERT HERE\"")
     .action(function(name: string, options: {[key: string]: string}, command: Command){
         if (!name) {
             command.outputHelp();
