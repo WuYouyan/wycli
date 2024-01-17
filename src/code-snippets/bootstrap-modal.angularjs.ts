@@ -84,13 +84,29 @@ export function generateModalComponentHTML(): string {
 }
 
 export const DEFAULT_TARGET_STRING = "//INSERT HERE";
-export function generateModalUsageComponentHTML(): string {
-  const usageCodes = `// codes test\n\tconst modal = new ModalComponent();\n\tmodal.open();`;
+export function generateModalUsageComponentHTML(componentConfig: ComponentConfigAngularjs): string {
+  const usageCodes =
+  `//TODO: to be verified
+  $uibModal.open({
+      component: ${componentConfig.name}, // component name
+      scope: $scope.$new(),
+      size: 'sm',
+      resolve: { // inputs to components
+        data: function () { // TODO: to be changed
+          return "your data";
+        }
+      }
+  }).result.then(
+      result => {
+        console.log('resolve: ', result);
+      },
+      err => console.info('dismiss: ', err)
+  );`;
   return usageCodes;
 }
 
-export function addModalComponentUsageInFile(filePath: string, targetString: string = DEFAULT_TARGET_STRING): void {
+export function addModalComponentUsageInFile(componentConfig: ComponentConfigAngularjs, filePath: string, targetString: string = DEFAULT_TARGET_STRING): void {
   const resolvedFilePath = path.resolve(process.cwd(), filePath);
   console.log('resolvedFilePath: ', resolvedFilePath);
-  replaceStringInFile(resolvedFilePath, targetString, generateModalUsageComponentHTML());
+  replaceStringInFile(resolvedFilePath, targetString, generateModalUsageComponentHTML(componentConfig));
 }

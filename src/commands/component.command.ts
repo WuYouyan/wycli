@@ -24,13 +24,14 @@ command
                     extname: "modal.js",
                     path: process.cwd()
                 });
-                virtualJsFile.content = generateModalComponent({
+                const componentConfig = {
                     name: virtualJsFile.name,
                     controllerName: capitalizeFirstLetter(virtualJsFile.name + 'Controller'),
                     moduleName: options.module as string || "test",
                     templateUrl: !!options.templateUrl,
                     templateUrlFn: !!options.templateUrlFunction
-                })
+                };
+                virtualJsFile.content = generateModalComponent(componentConfig);
                 const virtualHTMLFile = VirtualFile.fromPath(name, {
                     extname: "modal.html",
                     path: process.cwd(),
@@ -39,7 +40,7 @@ command
                 createFile(virtualJsFile);
                 createFile(virtualHTMLFile);
                 if (typeof options.bootstrapModalPath === "string") {
-                    addModalComponentUsageInFile(options.bootstrapModalPath);
+                    addModalComponentUsageInFile(componentConfig, options.bootstrapModalPath);
                 }
                 return;
             }

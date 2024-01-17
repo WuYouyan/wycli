@@ -163,7 +163,7 @@ export function replaceStringInFile(filePath: string, target: string, replace: s
                 if (err) {
                     console.error(chalk.red(`Error renaming file: ${err.message}`));
                 } else {
-                    console.log(chalk.green('Replaced!'));
+                    console.log(chalk.green('Replaced!'),'in', filePath);
                 }
             });
         });
