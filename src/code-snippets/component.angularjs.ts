@@ -27,26 +27,28 @@ export function generateComponent(component: ComponentConfigAngularjs): string {
   component.controllerName = capitalizeFirstLetter(component.controllerName || component.name + 'Controller');
   const templateUrl = getTemplateSetting(component);
   const stringTemplate =
-`class ${component.controllerName} {
-    constructor(){
-        'ngInject';
-        Object.assign(this, {});
-    }
-    $onInit(){
-
-    }
-}
-
-let moduleName = "${component.moduleName}";
-angular.module(moduleName)
-  .component("${component.name}", {
-      ${templateUrl},
-      controller: ${component.controllerName},
-      controllerAs: "$ctrl",
-      bindings: {
+`(function(){
+  'use strict'
+  class ${component.controllerName} {
+      constructor(){
+          'ngInject';
+          Object.assign(this, {});
       }
-  });
-`;
+      $onInit(){
+
+      }
+  }
+
+  let moduleName = "${component.moduleName}";
+  angular.module(moduleName)
+    .component("${component.name}", {
+        ${templateUrl},
+        controller: ${component.controllerName},
+        controllerAs: "$ctrl",
+        bindings: {
+        }
+    });
+})();`;
   return stringTemplate;
 }
 

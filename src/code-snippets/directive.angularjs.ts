@@ -25,33 +25,35 @@ export function generateDirective(directive: DirectiveConfigAngularjs): string {
   // remove undefined keys in directive config object
   const templateUrl = getTemplateSetting(directive);
   const stringTemplate =
-`class ${directive.controllerName} {
-    constructor(){
-        'ngInject';
-        Object.assign(this, {});
-    }
-    $onInit() {
-
-    }
-
-}
-
-let moduleName = "${directive.moduleName}";
-angular.module(moduleName)
-  .directive("${directive.name}", [function(){
-      return {
-        restrict: 'E',
-        ${templateUrl},
-        scope: {
-        },
-        link: function(scope, element, attrs, ctrl) {
-          // write link function here
-        },
-        controller: ${directive.controllerName},
-        controllerAs: "$ctrl",
+`(function(){
+  'use strict'
+  class ${directive.controllerName} {
+      constructor(){
+          'ngInject';
+          Object.assign(this, {});
       }
+      $onInit() {
+
+      }
+
+  }
+
+  let moduleName = "${directive.moduleName}";
+  angular.module(moduleName)
+    .directive("${directive.name}", [function(){
+        return {
+          restrict: 'E',
+          ${templateUrl},
+          scope: {
+          },
+          link: function(scope, element, attrs, ctrl) {
+            // write link function here
+          },
+          controller: ${directive.controllerName},
+          controllerAs: "$ctrl",
+        }
 	}]);
-`;
+})();`;
   return stringTemplate;
 }
 

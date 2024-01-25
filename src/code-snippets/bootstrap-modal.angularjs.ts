@@ -34,35 +34,37 @@ export function generateModalComponent(component: ComponentConfigAngularjs): str
   component.controllerName = capitalizeFirstLetter(component.controllerName || component.name + 'Controller');
   const templateUrl = getTemplateSetting(component);
   const stringTemplate =
-    `class ${component.controllerName} {
-    constructor(){
-        'ngInject';
-        Object.assign(this, {});
-    }
-    $onInit(){
+`(function(){
+  'use strict'
+  class ${component.controllerName} {
+      constructor(){
+          'ngInject';
+          Object.assign(this, {});
+      }
+      $onInit(){
 
-    }
-    ok(){
-        this.close({$value: true});
-    }
-    cancel(){
-        this.dismiss({$value: false});
-    }
-}
+      }
+      ok(){
+          this.close({$value: true});
+      }
+      cancel(){
+          this.dismiss({$value: false});
+      }
+  }
 
-let moduleName = "${component.moduleName}";
-angular.module(moduleName)
-    .component("${component.name}", {
-        ${templateUrl},
-        controller: ${component.controllerName},
-        controllerAs: "$ctrl",
-        bindings: {
-            resolve: '<',
-            close: '&',
-            dismiss: '&'
-        }
-    });
-`;
+  let moduleName = "${component.moduleName}";
+  angular.module(moduleName)
+      .component("${component.name}", {
+          ${templateUrl},
+          controller: ${component.controllerName},
+          controllerAs: "$ctrl",
+          bindings: {
+              resolve: '<',
+              close: '&',
+              dismiss: '&'
+          }
+      });
+})();`;
   return stringTemplate;
 }
 
