@@ -37,26 +37,33 @@ command
                     path: process.cwd(),
                     content: generateModalComponentHTML()
                 });
-                createFile(virtualJsFile);
-                createFile(virtualHTMLFile);
+                createFile(virtualJsFile); // create js file
+                createFile(virtualHTMLFile); // create html file
                 if (typeof options.bootstrapModalPath === "string") {
                     addModalComponentUsageInFile(componentConfig, options.bootstrapModalPath);
                 }
                 return;
             }
             //console.log("mkdir: ", command.parent?.parent?.opts().mkdir); // get parent options
-            const virtualFile = VirtualFile.fromPath(name, {
+            const virtualJsFile = VirtualFile.fromPath(name, {
                 extname: "component.js",
                 path: process.cwd()
             });
-            virtualFile.content = generateComponent({
-                name: virtualFile.name,
-                controllerName: capitalizeFirstLetter(virtualFile.name + 'Controller'),
+            virtualJsFile.content = generateComponent({
+                name: virtualJsFile.name,
+                controllerName: capitalizeFirstLetter(virtualJsFile.name + 'Controller'),
                 moduleName: options.module as string || "test",
                 templateUrl: !!options.templateUrl,
                 templateUrlFn: !!options.templateUrlFunction
             });
-            createFile(virtualFile);
+            createFile(virtualJsFile); // create js file
+            const virtualHTMLFile = VirtualFile.fromPath(name, {
+                extname: "component.html",
+                path: process.cwd(),
+                content: `<div>${name} html content</div>`
+            });
+            createFile(virtualHTMLFile); // create html file
+
         }
     });
 

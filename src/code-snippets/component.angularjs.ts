@@ -8,10 +8,10 @@ function getTemplateSetting(component: ComponentConfigAngularjs): string {
     templateString = `template: ""`;
   } else {
     templateString = !component.templateUrlFn?
-    `templateUrl: "./${component.name}/${component.name}.html"`:
+    `templateUrl: "./${component.name}/${component.name}.component.html"`:
       `templateUrl: function($element, $attrs, loadtemplate){
         // TODO:fix path
-        let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.html', ${component.moduleName});
+        let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.component.html', '${component.moduleName}');
         return templateUrl;
       }`;
   }
