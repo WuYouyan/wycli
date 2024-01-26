@@ -13,6 +13,12 @@ function getTemplateSetting(component: ComponentConfigAngularjs): string {
         // TODO:fix path
         let templateUrl = loadtemplate.getUrl('components/${component.name}/${component.name}.component.html', '${component.moduleName}');
         return templateUrl;
+        /*// TODO: remove this when loadtemplate is available
+        const module = kis.findModule('${component.moduleName}');
+        // TODO: fix path
+        const htmlPath = 'components/${component.name}/${component.name}.component.html';
+        return window.kis._toAbsoluteContentRootPath(module.name, htmlPath);
+        */
       }`;
   }
   return templateString;

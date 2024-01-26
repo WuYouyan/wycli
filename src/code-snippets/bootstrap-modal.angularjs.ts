@@ -14,8 +14,8 @@ function getTemplateSetting(component: ComponentConfigAngularjs): string {
             // TODO: fix path
             let templateUrl = loadtemplate.getUrl('modals/${component.name}/${component.name}.modal.html', ${component.moduleName});
             return templateUrl;
-            /* // if loadtemplate is not available
-            const module = kis.findModule(moduleName);
+            /* // TODO: remove this when loadtemplate is available
+            const module = kis.findModule('${component.moduleName}');
             // TODO: fix path
             const htmlPath = 'modals/${component.name}/${component.name}.modal.html';
             return window.kis._toAbsoluteContentRootPath(module.name, htmlPath);

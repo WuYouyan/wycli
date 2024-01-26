@@ -12,6 +12,11 @@ function getTemplateSetting(directive: DirectiveConfigAngularjs): string {
           // TODO:fix path
           let templateUrl = loadtemplate.getUrl('directives/${directive.name}/${directive.name}.html', ${directive.moduleName});
           return templateUrl;
+          /*// TODO: remove this when loadtemplate is available
+          const module = kis.findModule(moduleName);
+          const htmlPath = 'components/dashboard-list/dashboard-list.component.html';
+          return window.kis._toAbsoluteContentRootPath(module.name, htmlPath);
+          */
         }`;
   }
   return templateString;
