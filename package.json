@@ -13,7 +13,8 @@
     "debug": "node dist/index.js ls -tree"
   },
   "bin": {
-    "wycli": "./dist/index.js"
+    "wycli": "./dist/index.js",
+    "wy": "./dist/index.js"
   },
   "keywords": [
     "cli",
@@ -32,7 +33,6 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^11.0.0",
-    "figlet": "^1.6.0",
     "tree-node-cli": "^1.6.0"
   }
 }
