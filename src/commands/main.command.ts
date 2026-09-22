@@ -1,7 +1,8 @@
 import { Command } from 'commander';
-import path from "path";
+import path from 'path';
 import generateCommand from './generate.command';
 import listCommand from './list.command';
+import gitCommand from './git.command';
 import { createDir, createEmptyFile } from '../utilities/file-operations';
 
 const command = new Command("wycli");
@@ -26,5 +27,8 @@ command
     })
     .addCommand(listCommand)
     .addCommand(generateCommand);
+    
+// Add git command (provides `wycli git pull [path] --depth <n>`)
+command.addCommand(gitCommand);
 
 export default command;

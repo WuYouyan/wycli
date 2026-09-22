@@ -3,6 +3,7 @@ import mainCommand from "./main.command";
 import componentCommand from "./component.command";
 import generateCommand from "./generate.command";
 import serviceCommand from "./service.command";
+import gitCommand from "./git.command";
 
 
-export { componentCommand, generateCommand, mainCommand, serviceCommand };
+export { componentCommand, generateCommand, mainCommand, serviceCommand, gitCommand };
