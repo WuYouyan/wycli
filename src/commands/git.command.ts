@@ -14,6 +14,20 @@ const pull = new Command('pull')
     .option('-n, --dry-run', 'list matched repositories without executing git pull')
     .option('-i, --ignore-case', 'make name matching case-insensitive')
     .option('-R, --match-regex', 'treat match patterns as raw regular expressions')
+    .addHelpText('after', 
+`Examples:
+  wycli git pull
+    Scan the current directory for git repositories and update them.
+  wycli git pull C:/repos --depth 1
+    Scan the root folder and its immediate child folders of C:/repos.
+  wycli git pull C:/repos --depth 0 --dry-run
+    Preview which repos would be updated without running git pull.
+  wycli git pull C:/repos -m "my-app*" -n
+    Only match repository names starting with my-app and list them without updating.
+  wycli git pull C:/repos -m "*frontend*" -x "*legacy*" --dry-run
+    Include frontend repos but exclude legacy ones in preview mode.
+  wycli git pull C:/repos -m "app-*" -i --match-regex
+    Match repository names using a regex pattern and ignore case.`)
     .action((rootPath: string | undefined, options: any) => {
         const resolvedRoot = rootPath
             ? path.resolve(rootPath)
