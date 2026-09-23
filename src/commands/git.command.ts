@@ -2,6 +2,10 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
+import {
+    coercePatternList,
+    filterByPatterns
+} from '../utilities/pattern-filter';
 
 const gitCommand = new Command('git');
 
@@ -51,126 +55,12 @@ const pull = new Command('pull')
                 : 1;
         })();
 
-        const matchPatterns: string[] = Array.isArray(options.match)
-            ? options.match
-            : options.match
-                ? [options.match]
-                : [];
-
-        const excludePatterns: string[] = Array.isArray(options.exclude)
-            ? options.exclude
-            : options.exclude
-                ? [options.exclude]
-                : [];
+        const matchPatterns = coercePatternList(options.match);
+        const excludePatterns = coercePatternList(options.exclude);
 
         const dryRun = !!options.dryRun;
         const ignoreCase = !!options.ignoreCase;
         const matchRegexMode = !!options.matchRegex;
-
-        /**
-         * Convert a wildcard pattern to RegExp.
-         *
-         * Supported:
-         *
-         * foo       -> exactly "foo"
-         * foo*      -> starts with "foo"
-         * *foo      -> ends with "foo"
-         * *foo*     -> contains "foo"
-         * foo*bar   -> starts with foo and ends with bar
-         *
-         * Only "*" has special wildcard meaning.
-         * Everything else is treated literally.
-         */
-        function wildcardToRegex(pattern: string): RegExp {
-            const escaped = pattern
-                .replace(/[.+?^${}()|[\]\\]/g, '\\$&')
-                .replace(/\*/g, '.*');
-
-            return new RegExp(`^${escaped}$`, ignoreCase ? 'i' : undefined);
-        }
-
-        /**
-         * Compile either a raw regex or a wildcard pattern.
-         */
-        function patternToRegex(
-            pattern: string,
-            treatAsRegex = false
-        ): RegExp {
-            if (treatAsRegex) {
-                try {
-                    return new RegExp(
-                        pattern,
-                        ignoreCase ? 'i' : undefined
-                    );
-                } catch {
-                    // Invalid regex:
-                    // fallback to literal string matching
-                    const escaped = pattern.replace(
-                        /[.+?^${}()|[\]\\]/g,
-                        '\\$&'
-                    );
-
-                    return new RegExp(
-                        `^${escaped}$`,
-                        ignoreCase ? 'i' : undefined
-                    );
-                }
-            }
-
-            return wildcardToRegex(pattern);
-        }
-
-        /**
-         * Normalize CLI input.
-         *
-         * Examples:
-         *
-         * =foo*       -> foo*
-         * "'foo*'"    -> foo*
-         * '"foo*"'    -> foo*
-         */
-        function normalizePatternInput(p: string): string {
-            if (p === undefined || p === null) {
-                return '';
-            }
-
-            let s = String(p)
-                .trim()
-                .replace(/^=+/, '')
-                .trim();
-
-            if (
-                (s.startsWith("'") && s.endsWith("'")) ||
-                (s.startsWith('"') && s.endsWith('"'))
-            ) {
-                s = s.slice(1, -1).trim();
-            }
-
-            return s;
-        }
-
-        const normalizedMatchPatterns = matchPatterns
-            .map(normalizePatternInput)
-            .filter(Boolean);
-
-        const normalizedExcludePatterns = excludePatterns
-            .map(normalizePatternInput)
-            .filter(Boolean);
-
-        const matchRegexes = normalizedMatchPatterns.map(pattern =>
-            patternToRegex(pattern, matchRegexMode)
-        );
-
-        const excludeRegexes = normalizedExcludePatterns.map(pattern =>
-            patternToRegex(pattern, matchRegexMode)
-        );
-
-        function matchesAny(
-            name: string,
-            regexes: RegExp[]
-        ): boolean {
-            return regexes.some(regex => regex.test(name));
-        }
 
         if (
             !fs.existsSync(resolvedRoot) ||
@@ -211,22 +101,18 @@ const pull = new Command('pull')
             }
 
             const repoName = path.basename(dir);
+            const shouldProcess = filterByPatterns(
+                [repoName],
+                name => name,
+                matchPatterns,
+                excludePatterns,
+                {
+                    ignoreCase,
+                    matchRegex: matchRegexMode
+                }
+            ).length > 0;
 
-            // Match filter
-            const isMatch =
-                matchRegexes.length === 0 ||
-                matchesAny(repoName, matchRegexes);
-
-            // Exclude filter
-            const isExcluded =
-                excludeRegexes.length > 0 &&
-                matchesAny(repoName, excludeRegexes);
-
-            if (!isMatch) {
-                return;
-            }
-
-            if (isExcluded) {
+            if (!shouldProcess) {
                 return;
             }
 
